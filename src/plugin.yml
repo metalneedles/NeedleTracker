@@ -1,0 +1,13 @@
+name: MetalPlugin
+author: MetalNeedles
+api-version: 1.20
+main: com.metalneedles.plugin.Main
+version: 1.0
+commands:
+  manhunt:
+    description: Checks if Manhunt is currently enabled and Enables or Disables the Manhunt.
+    usage: /<command>; /<command> status; /<command> enable; /<command> disable
+  runner:
+    description: Checks who the runner(s) is/are or adds runner(s).
+    usage: /<command>; /<command> add; /<command> remove; /<command> list; /command clear
+    aliases: runners
