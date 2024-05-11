@@ -1,6 +1,6 @@
-package com.metalneedles.plugin.commands;
+package com.metalneedles.manhunt.commands;
 
-import com.metalneedles.plugin.Main;
+import com.metalneedles.manhunt.Manhunt;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
@@ -15,7 +15,7 @@ public class enableManhunt implements CommandExecutor {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("manhunt")) {
             if (args.length == 0) {
-                if (Main.ManhuntEnabled) {
+                if (Manhunt.ManhuntEnabled) {
                     sender.sendMessage("[Manhunt]" + ChatColor.YELLOW + " Manhunt is currently " + ChatColor.GREEN + "enabled!");
                 } else {
                     sender.sendMessage("[Manhunt]" + ChatColor.YELLOW + " Manhunt is currently " + ChatColor.RED + "disabled!");
@@ -24,10 +24,10 @@ public class enableManhunt implements CommandExecutor {
             }
             else if (args.length >= 1) {
                 if (args[0].equalsIgnoreCase("enable") && args.length == 1) {
-                    Main.ManhuntEnabled = true;
+                    Manhunt.ManhuntEnabled = true;
                     sender.sendMessage("[Manhunt]" + ChatColor.GREEN + " Manhunt has been enabled successfully!");
                 } else if (args[0].equalsIgnoreCase("disable") && args.length == 1) {
-                    Main.ManhuntEnabled = false;
+                    Manhunt.ManhuntEnabled = false;
                     sender.sendMessage("[Manhunt]" + ChatColor.RED + " Manhunt has been disabled successfully!");
                 } else {
                     sender.sendMessage("[Manhunt]" + ChatColor.RED + " Wrong usage!");
@@ -46,7 +46,7 @@ public class enableManhunt implements CommandExecutor {
                 if (target == null) {
                     sender.sendMessage("[Manhunt]" + ChatColor.RED + " The player specified does not exist or is not online!");
                 } else {
-                    Main.RUNNERS.add(target);
+                    Manhunt.RUNNERS.add(target);
                     sender.sendMessage("[Manhunt]" + ChatColor.YELLOW + " Player " + target + " has been added successfully");
                 }
 
@@ -56,7 +56,7 @@ public class enableManhunt implements CommandExecutor {
                 if (target == null) {
                     sender.sendMessage("[Manhunt]" + ChatColor.RED + " The player specified does not exist or is not online!");
                 } else {
-                    Main.instance.runners.remove(target);
+                    Manhunt.instance.runners.remove(target);
                     sender.sendMessage("[Manhunt]" + ChatColor.YELLOW + " Player " + target + " has been removed successfully");
                 }
 

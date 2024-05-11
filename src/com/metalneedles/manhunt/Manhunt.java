@@ -1,7 +1,7 @@
-package com.metalneedles.plugin;
+package com.metalneedles.manhunt;
 
-import com.metalneedles.plugin.commands.enableManhunt;
-import com.metalneedles.plugin.events.MyEvents;
+import com.metalneedles.manhunt.commands.enableManhunt;
+import com.metalneedles.manhunt.events.MyEvents;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -11,9 +11,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-public class Main extends JavaPlugin {
+public class Manhunt extends JavaPlugin {
 
-    public static Main instance = null;
+    public static Manhunt instance = null;
 
     // is manhunt even enabled?
     public static boolean ManhuntEnabled;
