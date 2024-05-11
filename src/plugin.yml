@@ -1,8 +1,10 @@
-name: MetalPlugin
+name: Manhunt
 author: MetalNeedles
-api-version: 1.20
-main: com.metalneedles.plugin.Main
-version: 1.0
+main: com.metalneedles.manhunt.Manhunt
+api-version: '1.20'
+version: '${project.version}'
+description: '${project.description}'
+
 commands:
   manhunt:
     description: Checks if Manhunt is currently enabled and Enables or Disables the Manhunt.
