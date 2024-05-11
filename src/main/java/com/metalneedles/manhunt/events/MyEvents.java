@@ -1,6 +1,6 @@
-package com.metalneedles.plugin.events;
+package com.metalneedles.manhunt.events;
 
-import com.metalneedles.plugin.Main;
+import com.metalneedles.manhunt.Manhunt;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
