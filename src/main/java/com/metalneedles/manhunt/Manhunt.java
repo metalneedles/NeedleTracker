@@ -13,21 +13,23 @@ import java.util.Set;
 
 public class Manhunt extends JavaPlugin {
 
-    public static Manhunt instance = null;
+    private static Manhunt instance;
+    private static String prefix;
 
     // is manhunt even enabled?
-    public static boolean ManhuntEnabled;
+    public static boolean enabled;
 
 
     public static final Set<Player> RUNNERS = new HashSet<>();
     public List<Player> hunters = new ArrayList();
 
 
-
     @Override
     public void onEnable(){
         instance = this;
-        ManhuntEnabled = false;
+        enabled = false;
+        prefix = "[" + getLogger().getName() + "]";
+
         this.getCommand("manhunt").setExecutor(new enableManhunt());
         this.getCommand("runner").setExecutor(new enableManhunt());
         this.getServer().getPluginManager().registerEvents(new MyEvents(), this);
@@ -37,5 +39,13 @@ public class Manhunt extends JavaPlugin {
     @Override
     public void onDisable() {
         getServer().getConsoleSender().sendMessage(ChatColor.RED + "MetaNeedles' Plugin disabled!");
+    }
+
+    public static Manhunt getInstance() {
+        return instance;
+    }
+
+    public static String getPrefix() {
+        return prefix;
     }
 }
