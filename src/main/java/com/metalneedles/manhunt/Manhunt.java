@@ -2,6 +2,7 @@ package com.metalneedles.manhunt;
 
 import com.metalneedles.manhunt.commands.enableManhunt;
 import com.metalneedles.manhunt.events.MyEvents;
+import com.metalneedles.manhunt.items.ItemManager;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -21,7 +22,7 @@ public class Manhunt extends JavaPlugin {
 
 
     public static final Set<Player> RUNNERS = new HashSet<>();
-    public List<Player> hunters = new ArrayList();
+    public static final Set<Player> HUNTERS = new HashSet<>();
 
 
     @Override
@@ -29,9 +30,10 @@ public class Manhunt extends JavaPlugin {
         instance = this;
         enabled = false;
         prefix = "[" + getLogger().getName() + "]";
-
+        ItemManager.init();
         this.getCommand("manhunt").setExecutor(new enableManhunt());
         this.getCommand("runner").setExecutor(new enableManhunt());
+        this.getCommand("hunter").setExecutor(new enableManhunt());
         this.getServer().getPluginManager().registerEvents(new MyEvents(), this);
         getServer().getConsoleSender().sendMessage(ChatColor.GREEN + "MetaNeedles' Plugin enabled!");
     }

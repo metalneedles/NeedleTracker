@@ -10,6 +10,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
 
 public class enableManhunt implements CommandExecutor {
 
@@ -17,7 +18,7 @@ public class enableManhunt implements CommandExecutor {
 
 
     @Override
-    public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
+    public boolean onCommand(@NotNull CommandSender sender, Command cmd, @NotNull String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("manhunt")) {
             if (args.length == 0) {
                 if (Manhunt.enabled) {
@@ -38,45 +39,118 @@ public class enableManhunt implements CommandExecutor {
             else {
                 if (args[0].equalsIgnoreCase("enable") && args.length == 1) {
                     Manhunt.enabled = true;
-                    sender.sendMessage("[Manhunt]" + ChatColor.GREEN + " Manhunt has been enabled successfully!");
+                    sender.sendMessage(Component.text(Manhunt.getPrefix()).append(Component.text(" Manhunt has been enabled successfully!").color(NamedTextColor.YELLOW)));
                 } else if (args[0].equalsIgnoreCase("disable") && args.length == 1) {
                     Manhunt.enabled = false;
-                    sender.sendMessage("[Manhunt]" + ChatColor.RED + " Manhunt has been disabled successfully!");
+                    sender.sendMessage(Component.text(Manhunt.getPrefix()).append(Component.text(" Manhunt has been disabled successfully!").color(NamedTextColor.YELLOW)));
                 } else {
-                    sender.sendMessage("[Manhunt]" + ChatColor.RED + " Wrong usage!");
-                    sender.sendMessage("[Manhunt]" + ChatColor.RED + " /manhunt");
-                    sender.sendMessage("[Manhunt]" + ChatColor.RED + " /manhunt enable");
-                    sender.sendMessage("[Manhunt]" + ChatColor.RED + " /manhunt disable");
+                    // if the player typed some nonsense
+
+                    sender.sendMessage(Component.text(Manhunt.getPrefix())
+                            .append(Component.text(" Wrong usage!").color(NamedTextColor.RED))
+                            .appendNewline().append(Component.text("/manhunt").color(NamedTextColor.RED))
+                            .appendNewline().append(Component.text("/manhunt enable OR /manhunt disable").color(NamedTextColor.RED))
+                    );
                 }
             }
             return true;
         } else if (cmd.getName().equalsIgnoreCase("runner")) {
+
+            // String.join(", ", Manhunt.RUNNERS.stream().map(Player::getName).toList())
+
             if (args.length == 0) {
-                sender.sendMessage(String.join(", ", Manhunt.RUNNERS.stream().map(Player::getName).toList()));
+                sender.sendMessage(Component.text(Manhunt.getPrefix())
+                        .append(Component.text(" The following Players are runners: "))
+                        .append(Component.text(String.join(", ", Manhunt.RUNNERS.stream().map(Player::getName).toList())))
+                );
             } else if (args[0].equalsIgnoreCase("add") && args.length == 2) {
                 String playername = args[1];
                 Player target = Bukkit.getServer().getPlayerExact(playername);
                 if (target == null) {
-                    sender.sendMessage("[Manhunt]" + ChatColor.RED + " The player specified does not exist or is not online!");
+                    sender.sendMessage(Component.text(Manhunt.getPrefix())
+                            .append(Component.text(" The Player specified does not exist!").color(NamedTextColor.RED))
+                    );
                 } else {
                     Manhunt.RUNNERS.add(target);
-                    sender.sendMessage("[Manhunt]" + ChatColor.YELLOW + " Player " + target + " has been added successfully");
+                    sender.sendMessage(Component.text(Manhunt.getPrefix())
+                            .append(Component.text(" The Player ").color(NamedTextColor.YELLOW))
+                            .append(Component.text(target.getName()).decorate(TextDecoration.BOLD))
+                            .append(Component.text(" has been added successfully!").color(NamedTextColor.YELLOW))
+                    );
                 }
 
             } else if (args[0].equalsIgnoreCase("remove") && args.length == 2) {
                 String playername = args[1];
                 Player target = Bukkit.getServer().getPlayerExact(playername);
                 if (target == null) {
-                    sender.sendMessage("[Manhunt]" + ChatColor.RED + " The player specified does not exist or is not online!");
+                    sender.sendMessage(Component.text(Manhunt.getPrefix())
+                            .append(Component.text(" The Player specified does not exist!").color(NamedTextColor.RED))
+                    );
                 } else {
                     Manhunt.RUNNERS.remove(target);
-                    sender.sendMessage("[Manhunt]" + ChatColor.YELLOW + " Player " + target + " has been removed successfully");
+                    sender.sendMessage(Component.text(Manhunt.getPrefix())
+                            .append(Component.text(" The Player ").color(NamedTextColor.YELLOW))
+                            .append(Component.text(target.getName()).decorate(TextDecoration.BOLD))
+                            .append(Component.text(" has been removed successfully!").color(NamedTextColor.YELLOW))
+                    );
                 }
 
             }
             else if (args[0].equalsIgnoreCase("clear")) {
+                Manhunt.RUNNERS.clear();
+                sender.sendMessage(Component.text(Manhunt.getPrefix())
+                        .append(Component.text(" The List of Runners has been cleared successfully!").color(NamedTextColor.YELLOW))
+                );
 
             }
+        } else if (cmd.getName().equalsIgnoreCase("hunter")) {
+
+            if (args.length == 0) {
+                sender.sendMessage(Component.text(Manhunt.getPrefix())
+                        .append(Component.text(" The following Players are hunters: "))
+                        .append(Component.text(String.join(", ", Manhunt.HUNTERS.stream().map(Player::getName).toList())))
+                );
+            } else if (args[0].equalsIgnoreCase("add") && args.length == 2) {
+                String playername = args[1];
+                Player target = Bukkit.getServer().getPlayerExact(playername);
+                if (target == null) {
+                    sender.sendMessage(Component.text(Manhunt.getPrefix())
+                            .append(Component.text(" The Player specified does not exist!").color(NamedTextColor.RED))
+                    );
+                } else {
+                    Manhunt.HUNTERS.add(target);
+                    sender.sendMessage(Component.text(Manhunt.getPrefix())
+                            .append(Component.text(" The Player ").color(NamedTextColor.YELLOW))
+                            .append(Component.text(target.getName()).decorate(TextDecoration.BOLD))
+                            .append(Component.text(" has been added successfully!").color(NamedTextColor.YELLOW))
+                    );
+                }
+
+            } else if (args[0].equalsIgnoreCase("remove") && args.length == 2) {
+                String playername = args[1];
+                Player target = Bukkit.getServer().getPlayerExact(playername);
+                if (target == null) {
+                    sender.sendMessage(Component.text(Manhunt.getPrefix())
+                            .append(Component.text(" The Player specified does not exist!").color(NamedTextColor.RED))
+                    );
+                } else {
+                    Manhunt.HUNTERS.remove(target);
+                    sender.sendMessage(Component.text(Manhunt.getPrefix())
+                            .append(Component.text(" The Player ").color(NamedTextColor.YELLOW))
+                            .append(Component.text(target.getName()).decorate(TextDecoration.BOLD))
+                            .append(Component.text(" has been removed successfully!").color(NamedTextColor.YELLOW))
+                    );
+                }
+
+            }
+            else if (args[0].equalsIgnoreCase("clear")) {
+                Manhunt.HUNTERS.clear();
+                sender.sendMessage(Component.text(Manhunt.getPrefix())
+                        .append(Component.text(" The List of Hunters has been cleared successfully!").color(NamedTextColor.YELLOW))
+                );
+
+            }
+
         }
 
 
