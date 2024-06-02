@@ -6,14 +6,9 @@ version: '${project.version}'
 description: '${project.description}'
 
 commands:
-  manhunt:
+  track:
     description: Checks if Manhunt is currently enabled and Enables or Disables the Manhunt.
     usage: /<command>; /<command> status; /<command> enable; /<command> disable
-  runner:
-    description: Checks who the runner(s) is/are or adds runner(s).
-    usage: /<command>; /<command> add; /<command> remove; /<command> list; /command clear
-    aliases: runners
-  hunter:
-    description: Checks who the hunter(s) is/are or adds hunter(s).
-    usage: /<command>; /<command> add; /<command> remove; /<command> list; /command clear
-    aliases: hunters
+    aliases:
+      - settracker
+      - hunt

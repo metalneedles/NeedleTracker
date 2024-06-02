@@ -4,6 +4,7 @@ import com.metalneedles.manhunt.events.MyEvents;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.NamedTextColor;
 import net.kyori.adventure.text.format.TextDecoration;
+import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
@@ -15,19 +16,16 @@ public class ItemManager {
 
     public static ItemStack tracker;
 
-    public static void init() {
-        createTracker();
-    }
-
-    private static void createTracker() {
+    public static void createTracker(Location pLoc) {
         ItemStack item = new ItemStack(Material.COMPASS, 1);
-        ItemMeta meta = item.getItemMeta();
+        CompassMeta meta = (CompassMeta) item.getItemMeta();
         // CompassMeta compMeta = (CompassMeta) item.getItemMeta();
         // compMeta.setLodestone(MyEvents.runnerLocation);
         // compMeta.setLodestoneTracked(true);
         meta.displayName(Component.text("Tracker").color(NamedTextColor.BLUE).decorate(TextDecoration.BOLD));
-        meta.addEnchant(Enchantment.VANISHING_CURSE, 1, false);
-        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        pLoc.setY(1000);
+        meta.setLodestone(pLoc);
+        meta.setLodestoneTracked(false);
         item.setItemMeta(meta);
         tracker = item;
     }
